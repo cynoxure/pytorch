@@ -31,8 +31,13 @@ echo "Build with ANDROID_ABI[$ANDROID_ABI], ANDROID_NATIVE_API_LEVEL[$ANDROID_NA
 
 CAFFE2_ROOT="$( cd "$(dirname "$0")"/.. ; pwd -P)"
 if [ -z "$ANDROID_NDK" ]; then
-  echo "ANDROID_NDK not set; please set it to the Android NDK directory"
-  exit 1
+  if [ -z "$ANDROID_NDK_PATH" ]; then
+    echo "ANDROID_NDK not set; please set it to the Android NDK directory"
+    exit 1
+  else
+    echo "Created ANDROID_NDK from ANDROID_NDK_PATH"
+    eval 'export ANDROID_NDK=$ANDROID_NDK_PATH'
+  fi
 fi
 
 if [ ! -d "$ANDROID_NDK" ]; then
